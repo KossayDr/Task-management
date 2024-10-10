@@ -22,13 +22,13 @@ class TaskController extends Controller
     {
        
     $user = Auth::user(); 
-    // تحقق من دور المستخدم
+   
     if ($user->hasRole('editor') || $user->hasRole('admin')) {
-        // إذا كان المستخدم لديه دور "Editor" أو "Admin"، إرجاع جميع المهام
+
         $tasks = Task::all();
         return $this->buildResponse($tasks, 'Success', 'Show all tasks by editor or admin successfully', 200);
     } else {
-        // إذا لم يكن لدى المستخدم دور "Editor" أو "Admin"، إرجاع المهام الخاصة بالمستخدم فقط
+        
         $tasks = Task::where('user_id', $user->id)->get();
         return $this->buildResponse($tasks, 'Success', 'Show tasks by owner successfully', 200);
     }
@@ -71,13 +71,13 @@ class TaskController extends Controller
     public function destroy(Task $task)
     {
         $user = Auth::user(); 
-        // تحقق من دور المستخدم
+  
         if ($user->hasRole('editor') || $user->hasRole('admin')) {
         
         $task->delete();
         return $this->buildResponse([], 'Success', 'Delete  task by editor or admin successfully', 200);
     } else {
-        // إذا لم يكن لدى المستخدم دور "Editor" أو "Admin"، إرجاع المهام الخاصة بالمستخدم فقط
+  
         $tasks = Task::where('user_id', $user->id)->delete();
         return $this->buildResponse([], 'Success', 'Delete task by owner successfully', 200);
     }

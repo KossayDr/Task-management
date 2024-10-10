@@ -22,7 +22,7 @@ class RoleController extends Controller
     if ($roles->isEmpty()) {
         return $this->buildResponse([], 'Error', 'not found roles', 200);
     }
-    // تعديل صلاحيات الأدوار لإخفاء الحقول الزائدة
+  
     $roles->each(function($role){
         $role->permissions->each(function($permission){
             $permission->makeHidden(['guard_name', 'created_at', 'updated_at', 'pivot']);
@@ -62,12 +62,12 @@ class RoleController extends Controller
     public function show(Role $role)
     {
        
-        $role->makeHidden(['guard_name', 'created_at', 'updated_at']); // إخفاء الحقول من الدور
+        $role->makeHidden(['guard_name', 'created_at', 'updated_at']); 
     
         $permissions = $role->permissions->each(function ($permission) {
             $permission->makeHidden(['guard_name', 'created_at', 'updated_at', 'pivot']);
         });
-    // setRelation: من اجل تحديث العلاقة المحملة مسبقا في (eager loaded)
+    
         return $this->buildResponse($role->setRelation('permissions', $permissions), 'Success', 'Show roles successfully', 200);
     }
 

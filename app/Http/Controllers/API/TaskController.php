@@ -62,7 +62,7 @@ class TaskController extends Controller
 // show one task
     public function show(Task $task)
 {
-    // التحقق من الأذونات
+   
     $this->authorize('view', $task);
     
     return $this->buildResponse($task, 'Success', 'Task retrieved successfully', 200);
